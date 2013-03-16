@@ -5,7 +5,9 @@ gem 'compass'
 gem 'zurb-foundation'
 gem 'puma'
 gem 'haml'
-gem 'rack-cache'
+gem 'rack-cache', :require => 'rack/cache'
+gem 'dragonfly'
+gem 'mongoid'
 
 group :development do
   gem 'shotgun'

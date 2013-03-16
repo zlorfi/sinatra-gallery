@@ -3,3 +3,4 @@
 body
 meta
 .DS_Store
+upload/*

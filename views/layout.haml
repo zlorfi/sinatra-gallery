@@ -15,6 +15,7 @@
     %link{:href => "/stylesheets/normalize.css", :rel => "stylesheet"}
     %link{:href => "/stylesheets/app.css", :rel => "stylesheet"}
     %script{:src => "/javascripts/vendor/custom.modernizr.js"}
+    %script{:src => "/javascripts/vendor/jquery.js"}
     / IE Fix for HTML5 Tags
     /[if lt IE 9]
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -22,12 +23,15 @@
     .row
       .large-12.columns
         %h2 Gallery
+        -if @flash
+          .alert-box.success{"data-alert" => ""}
+            = @flash
+            %a.close{:href => "#"} ×
         %hr/
 
     =yield
 
     / Included JS Files (Uncompressed)
-    %script{:src => "/javascripts/vendor/jquery.js"}
     %script{:src => "/javascripts/foundation/foundation.js"}
     %script{:src => "/javascripts/foundation/foundation.alerts.js"}
     %script{:src => "/javascripts/foundation/foundation.clearing.js"}
