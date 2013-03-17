@@ -57,7 +57,6 @@ class App < Sinatra::Base
 
     field :image_uid
     field :image_name
-    field :image_width
     field :base_path
 
     image_accessor :image
