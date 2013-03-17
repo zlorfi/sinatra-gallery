@@ -1,7 +1,7 @@
 .row
   .large-8.columns
-    = @image.portrait?
     = @image.remote_url
     = @image.url
     %img{:src => "#{@image.thumb('600x600').url}"}/
+    %img{:src => "#{@image.thumb("200x200").png.convert("-background #666666 +polaroid").url}"}/
     %img{:src => "#{@image.thumb('100x100').url}"}/
