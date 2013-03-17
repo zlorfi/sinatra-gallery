@@ -1,0 +1,7 @@
+.row
+  .large-8.columns
+    =# @image.path
+    = @image.remote_url
+    = @image.url
+    %img{:src => "#{@image.thumb('600x600').url}"}/
+    %img{:src => "#{@image.thumb('100x100').url}"}/
