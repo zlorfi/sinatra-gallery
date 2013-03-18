@@ -1,0 +1,5 @@
+- %w[alert success].each do |key|
+  - if flash[key]
+    %div{:class => "alert-box #{key}", "data-alert" => ""}
+      = flash[key]
+      %a.close{:href => "#"} &times;

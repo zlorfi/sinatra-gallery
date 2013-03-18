@@ -1,0 +1,28 @@
+%nav.top-bar
+  %ul.title-area
+    / Title Area
+    %li.name
+      %h1
+        %a{:href => "/"} Sinatra Gallery
+    / Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone
+    %li.toggle-topbar.menu-icon
+      %a{:href => "/"}
+        %span Menu
+  %section.top-bar-section
+    / Left Nav Section
+    %ul.left
+      %li.divider
+    / Right Nav Section
+    %ul.right
+      %li.divider.hide-for-small
+      %li
+        %a{:href => "/upload"} Upload
+      %li.divider
+      %li.has-form
+        %form
+          .row.collapse
+            .small-8.columns
+              %input{:type => "text"}/
+            .small-4.columns
+              %a.alert.button{:href => "#"} Search
+      %li.divider.show-for-small

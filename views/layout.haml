@@ -15,36 +15,39 @@
     %link{:href => "/stylesheets/normalize.css", :rel => "stylesheet"}
     %link{:href => "/stylesheets/app.css", :rel => "stylesheet"}
     %script{:src => "/javascripts/vendor/custom.modernizr.js"}
-    %script{:src => "/javascripts/vendor/jquery.js"}
+    %script{:src => "/javascripts/vendor/jquery.min.js"}
+    %script{:src => "/javascripts/app.js"}
+    /:javascript
+    /  document.write('<script src=' +
+    /  ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
+    /  '.js><\/script>')
     / IE Fix for HTML5 Tags
     /[if lt IE 9]
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   %body
     .row
       .large-12.columns
-        %h2 Gallery
-        -if @flash
-          .alert-box.success{"data-alert" => ""}
-            = @flash
-            %a.close{:href => "#"} ×
-        %hr/
+        = haml :top_nav
+        = haml :notification
+        -# %hr/
 
     =yield
 
+    %script{:src => "/javascripts/foundation.min.js"}
     / Included JS Files (Uncompressed)
-    %script{:src => "/javascripts/foundation/foundation.js"}
-    %script{:src => "/javascripts/foundation/foundation.alerts.js"}
-    %script{:src => "/javascripts/foundation/foundation.clearing.js"}
-    %script{:src => "/javascripts/foundation/foundation.cookie.js"}
-    %script{:src => "/javascripts/foundation/foundation.dropdown.js"}
-    %script{:src => "/javascripts/foundation/foundation.forms.js"}
-    %script{:src => "/javascripts/foundation/foundation.joyride.js"}
-    %script{:src => "/javascripts/foundation/foundation.magellan.js"}
-    %script{:src => "/javascripts/foundation/foundation.orbit.js"}
-    %script{:src => "/javascripts/foundation/foundation.placeholder.js"}
-    %script{:src => "/javascripts/foundation/foundation.reveal.js"}
-    %script{:src => "/javascripts/foundation/foundation.section.js"}
-    %script{:src => "/javascripts/foundation/foundation.tooltips.js"}
-    %script{:src => "/javascripts/foundation/foundation.topbar.js"}
+    /%script{:src => "/javascripts/foundation/foundation.js"}
+    /%script{:src => "/javascripts/foundation/foundation.alerts.js"}
+    /%script{:src => "/javascripts/foundation/foundation.clearing.js"}
+    /%script{:src => "/javascripts/foundation/foundation.cookie.js"}
+    /%script{:src => "/javascripts/foundation/foundation.dropdown.js"}
+    /%script{:src => "/javascripts/foundation/foundation.forms.js"}
+    /%script{:src => "/javascripts/foundation/foundation.joyride.js"}
+    /%script{:src => "/javascripts/foundation/foundation.magellan.js"}
+    /%script{:src => "/javascripts/foundation/foundation.orbit.js"}
+    /%script{:src => "/javascripts/foundation/foundation.placeholder.js"}
+    /%script{:src => "/javascripts/foundation/foundation.reveal.js"}
+    /%script{:src => "/javascripts/foundation/foundation.section.js"}
+    /%script{:src => "/javascripts/foundation/foundation.tooltips.js"}
+    /%script{:src => "/javascripts/foundation/foundation.topbar.js"}
     :javascript
       $(document).foundation();

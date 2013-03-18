@@ -6,8 +6,12 @@ require "zurb-foundation"
 require 'haml'
 require 'dragonfly'
 require 'mongoid'
+require 'rack-flash'
+require './helper/dragonfly_helper'
 
 class App < Sinatra::Base
+  helpers Sinatra::DragonflyHelper
+
   configure :production, :development do
     enable :logging
   end
@@ -40,16 +44,7 @@ class App < Sinatra::Base
     set :scss, Compass.sass_engine_options
     set :server, :puma
     enable :sessions
-  end
-
-  helpers do
-    def flash(message = '')
-      session[:flash] = message
-    end
-  end
-
-  before do
-    @flash = session.delete(:flash)
+    use Rack::Flash, :sweep => true
   end
 
   class Picture
@@ -79,15 +74,21 @@ class App < Sinatra::Base
       image_uid = app.store(file, :meta => {:time => Time.now, :name => filename})
       picture = Picture.create(image_uid: image_uid, image_name: filename)
 
-      flash "Upload successful of #{filename}"
+      flash[:success] = "Upload successful of #{filename}"
+      redirect "/gallery/#{picture.id}"
     else
-      flash 'You have to choose a file'
+      flash[:alert] = 'You have to choose a file first'
+      redirect "/upload"
     end
 
-    redirect '/upload'
   end
 
-  get '/:image_id' do |image_id|
+  get "/gallery" do
+    @pictures = Picture.all
+    haml :gallery
+  end
+
+  get '/gallery/:image_id' do |image_id|
     @image = Picture.find(image_id).image
     haml :show
   end

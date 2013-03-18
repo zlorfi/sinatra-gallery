@@ -1,0 +1,10 @@
+.row
+  .large-8.columns
+    = @pictures.count
+    %br/
+    %ul{"data-options" => "timer_speed:2500;", "data-orbit" => ""}
+      - @pictures.each do |key|
+        %li
+          -#%img{:src => "#{key.image.thumb('600x600').url}"}/
+          = thumbnail_tag key.image, '500x500'
+          .orbit-caption "#{key.image.width}"

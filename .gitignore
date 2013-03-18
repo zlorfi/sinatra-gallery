@@ -4,3 +4,4 @@ body
 meta
 .DS_Store
 upload/*
+public/thumbnails
