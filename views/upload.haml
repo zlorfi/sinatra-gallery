@@ -1,17 +1,68 @@
 .row
   .large-8.columns
+    %h1 Upload Document
     %form#file_upload(action="/upload" method="post" enctype="multipart/form-data")
       -# %input{:type => :hidden, :name => :key}
 
       .fileupload-content
         .fileupload-progress
       .file-upload
-        %label.fileinput-button
-          %span Upload Document
-          %input{:type => :file, :name => :file}
-          %input.small.button{:type => "submit",:value => "Upload"}
+        .row
+          .large-6.columns
+            %label Title
+            %input.title{:type => "text", :placeholder => "Insert Title", :name => :title}
+          .large-6.columns
+            %input{:type => :file, :name => :file}
+        -#%input.small.button{:type => "submit" ,:value => "Upload", :id => 'upload'}
+
+    .progress.large-6
+      %span.pb{:class => "meter", :style => "width: 0%"}
           
+    #your_documents
 
 %script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.ui.widget.js"}
-%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.iframe-transport.js"}
+-#%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.iframe-transport.js"}
 %script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.fileupload.js"}
+:javascript
+  $('.progress').hide();
+
+  $('#file_upload').fileupload({
+    autoUpload: true,
+    add: function (event, data) {
+      $.ajax({
+        url: '/upload',
+        type: 'POST',
+        dataType: 'json',
+        data: {doc: {title: data.files[0].name}},
+      });
+
+      //data.context = $('#upload').val('Uploading...');
+      data.submit();
+    },
+    progressall: function (e, data) {
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('.progress .pb').css('width', progress + '%');
+    },
+    send: function(e, data) {
+      $('.progress').show();
+    },
+    fail: function(e, data) {
+      console.log('fail');
+      console.log(data);
+    },
+    done: function (e, data) {
+      $('.title').val('');
+      $('.progress .pb').css('width', '0%');
+      $('.progress').hide();
+      $('#loading').hide();
+      //$('#upload').val('Upload');
+      console.log(data.bitrate);
+      console.log(data.result);
+      console.log(data.result.image_uid);
+      $('#flash_notice').html("#{raw(flash_display)}");
+      $('#your_documents').hide().html("<img src='/t/" + data.result._id + "'></img>").fadeIn('slow');
+      
+    }
+
+  });
+

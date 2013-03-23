@@ -7,6 +7,7 @@ gem 'puma'
 gem 'haml'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly'
+gem 'bson_ext'
 gem 'mongoid'
 gem 'rack-flash3'
 

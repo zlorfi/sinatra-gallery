@@ -1,52 +1,24 @@
 .row
   .large-8.columns
-    %h3 The Grid
-    / Grid Example
-    %ul{"data-options" => "timer_speed:2500;", "data-orbit" => ""}
-      %li
-        %img{:src => "http://placehold.it/1200x600&text=Slider 1"}/
-        .orbit-caption "Slider 1"
-      %li
-        %img{:src => "http://placehold.it/1200x600&text=Slider 2"}/
-        .orbit-caption "Slider 2"
-      %li
-        %img{:src => "http://placehold.it/1200x600&text=Slider 3"}/
-        .orbit-caption "Slider 3"
-    .row
-      .large-12.columns
-        .panel
-          %p This is a twelve column section in a row. Each of these includes a div.panel element so you can see where the columns are - it's not required at all for the grid.
-    .row
-      .large-6.columns
-        .panel
-          %p Six columns
-      .large-6.columns
-        .panel
-          %p Six columns
-    .row
-      .large-4.columns
-        .panel
-          %p Four columns
-      .large-4.columns
-        .panel
-          %p Four columns
-      .large-4.columns
-        .panel
-          %p Four columns
-    %h3 Buttons
-    .row
-      .large-6.columns
-        %p
-          %a.small.button{:href => "#"} Small Button
-        %p
-          %a.button{:href => "#"} Medium Button
-        %p
-          %a.large.button{:href => "#"} Large Button
-      .large-6.columns
-        %p
-          %a.small.alert.button{:href => "#"} Small Alert Button
-        %p
-          %a.success.button{:href => "#"} Medium Success Button
-        %p
-          %a.large.secondary.button{:href => "#"} Large Secondary Button
+    =# @pictures.count
+    -#%ul{"data-options" => "timer_speed:2500;", "data-orbit" => ""}
+      - @pictures.each do |key|
+        %li
+          %img{:src => "#{key.image.thumb('600x600').url}"}/
+          .orbit-caption "Taken on #{key.image_date} with #{key.image_model} (#{key.id})"
+  
+    %ul.small-block-grid-2.large-block-grid-4
+      - @pictures.each do |key|
+        %li
+          %a{:href => "#{key.image.thumb('800x800').url}"}
+            %img{:src => "#{key.image.thumb('200x200#').url}", :alt => "#{key.image_name}"}
+            -if admin?
+              %form(action="/delete/#{key.id}" method="post")
+                %input{:type => :hidden, :name => "_method", :value => "delete"}
+                %a.tiny.button.info.radius{:href => "/i/#{key.id}"} Show
+                %input.tiny.button.alert.radius{:type => "submit", :value => "Delete"}
+
   = haml :sidebar
+
+-#%script{:src => '/javascripts/vendor/jquery.yoxview-2.21.min.js', :type => 'text/javascript'}
+:javascript

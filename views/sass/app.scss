@@ -4,6 +4,8 @@
 // Comment out this import if you are customizing you imports below
 @import "foundation";
 
+@import 'font-awesome';
+
 // Import specific parts of Foundation by commenting the import "foundation"
 // and uncommenting what you want below. You must uncomment the following if customizing
 
@@ -44,3 +46,7 @@
 // @import "foundation/components/tooltips";
 // @import "foundation/components/dropdown";
 
+.bar {
+    height: 18px;
+    background: green;
+}

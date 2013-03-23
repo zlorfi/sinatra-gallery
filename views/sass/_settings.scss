@@ -953,10 +953,10 @@
 //
 
 // Background color for the top bar
-$topbar-bg: #444;
+$topbar-bg: #666;
 
 // Height and margin
-$topbar-height: 40px;
+$topbar-height: 44px;
 // $topbar-margin-bottom: emCalc(30px);
 
 // Control Input height for top bar
@@ -992,4 +992,3 @@ $topbar-height: 40px;
 // $topbar-transition-speed: 300ms;
 // $topbar-breakpoint: emCalc(940px); // Change to 9999px for always mobile layout
 // $topbar-media-query: "only screen and (min-width "#{$topbar-breakpoint}")";
-

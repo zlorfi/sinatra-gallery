@@ -10,13 +10,15 @@
     %meta{:charset => "utf-8"}/
     / Set the viewport width to device width for mobile
     %meta{:content => "width=device-width", :name => "viewport"}/
-    %title Foundation 4
+    %title Sinatra Gallery
     / Included CSS Files
-    %link{:href => "/stylesheets/normalize.css", :rel => "stylesheet"}
-    %link{:href => "/stylesheets/app.css", :rel => "stylesheet"}
-    %script{:src => "/javascripts/vendor/custom.modernizr.js"}
+    %link{:href => asset_stylesheet('normalize'), :rel => "stylesheet"}
+    %link{:href => asset_stylesheet('app'), :rel => "stylesheet"}
+    %link{:href => asset_stylesheet('font-awesome'), :rel => "stylesheet"}
+    
     %script{:src => "/javascripts/vendor/jquery.min.js"}
-    %script{:src => "/javascripts/app.js"}
+    %script{:src => "/javascripts/vendor/custom.modernizr.js"}
+    %script{:src => asset_javascript('app'), :type => 'text/javascript'}
     /:javascript
     /  document.write('<script src=' +
     /  ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
@@ -33,21 +35,7 @@
 
     =yield
 
-    %script{:src => "/javascripts/foundation.min.js"}
-    / Included JS Files (Uncompressed)
-    /%script{:src => "/javascripts/foundation/foundation.js"}
-    /%script{:src => "/javascripts/foundation/foundation.alerts.js"}
-    /%script{:src => "/javascripts/foundation/foundation.clearing.js"}
-    /%script{:src => "/javascripts/foundation/foundation.cookie.js"}
-    /%script{:src => "/javascripts/foundation/foundation.dropdown.js"}
-    /%script{:src => "/javascripts/foundation/foundation.forms.js"}
-    /%script{:src => "/javascripts/foundation/foundation.joyride.js"}
-    /%script{:src => "/javascripts/foundation/foundation.magellan.js"}
-    /%script{:src => "/javascripts/foundation/foundation.orbit.js"}
-    /%script{:src => "/javascripts/foundation/foundation.placeholder.js"}
-    /%script{:src => "/javascripts/foundation/foundation.reveal.js"}
-    /%script{:src => "/javascripts/foundation/foundation.section.js"}
-    /%script{:src => "/javascripts/foundation/foundation.tooltips.js"}
-    /%script{:src => "/javascripts/foundation/foundation.topbar.js"}
+    %script{:src => asset_javascript('foundation.min'), :type => 'text/javascript'}
+
     :javascript
       $(document).foundation();
