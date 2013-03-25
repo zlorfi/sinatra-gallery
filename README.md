@@ -19,3 +19,5 @@
 
 ## TODO
 - image handler exception
+- show flash message with xhr request
+- add jQuery gallery function

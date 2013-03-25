@@ -42,16 +42,16 @@ class App < Sinatra::Base
     set :scss, Compass.sass_engine_options
     set :server, :puma
     enable :sessions
-    use Rack::Flash#, :sweep => true
+    use Rack::Flash, :sweep => true
 
     #necessary for the DELETE route when using 
     use Rack::MethodOverride
 
     set :username,'gallery'
+    set :password,'gallery'
     # make this a huge random number
     # SecureRandom.urlsafe_base64(30, true)
     set :token,'SzXdCtiS4hmt6gXhS4NIahrfL7iH7aUb0DXd-B35' 
-    set :password,'gallery'
   end
 
   class Picture
@@ -94,12 +94,14 @@ class App < Sinatra::Base
 
     def protected!
       halt [ 401, 'Not Authorized' ] unless admin?
+      #flash[:alert] = "Login failed!"
+      #halt haml :index unless admin?
     end
 
     def flash_display
       response = ""
       unless flash.nil?
-        flash
+        flash.now[:success] = "Upload successful of"
         #flash.each do |name, msg|
         #  response = response + content_tag(:div, msg, :id => "flash_#{name}")
         #end
@@ -156,12 +158,12 @@ class App < Sinatra::Base
                                image_date: Time.now
                               )
 
-      flash.now[:success] = "Upload successful of #{filename}"
+      flash[:success] = "Upload successful of #{filename}" if !request.xhr?
       redirect "/i/#{picture.id}" if !request.xhr?
       #flash.keep unless request.xhr?
       picture.to_json
     else
-      flash.now[:alert] = 'You have to choose a file first'
+      flash[:alert] = 'You have to choose a file first'
       #flash.keep unless request.xhr?
       redirect "/upload"
     end

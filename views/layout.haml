@@ -15,9 +15,10 @@
     %link{:href => asset_stylesheet('normalize'), :rel => "stylesheet"}
     %link{:href => asset_stylesheet('app'), :rel => "stylesheet"}
     %link{:href => asset_stylesheet('font-awesome'), :rel => "stylesheet"}
+    %link{:href => '/elastislide.css', :rel => "stylesheet"}
     
     %script{:src => "/javascripts/vendor/jquery.min.js"}
-    %script{:src => "/javascripts/vendor/custom.modernizr.js"}
+    %script{:src => "/javascripts/vendor/modernizr.custom.js"}
     %script{:src => asset_javascript('app'), :type => 'text/javascript'}
     /:javascript
     /  document.write('<script src=' +
@@ -31,7 +32,6 @@
       .large-12.columns
         = haml :top_nav
         = haml :notification
-        -# %hr/
 
     =yield
 
