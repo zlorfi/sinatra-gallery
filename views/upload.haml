@@ -47,6 +47,8 @@
       fail: function(e, data) {
         console.log('fail');
         console.log(data);
+        var url = '/notification/alert/Somethin_went_wrong';
+        $('#flash_notice').load(url);
       },
       done: function (e, data) {
         $('.title').val('');
@@ -55,7 +57,8 @@
         $('#loading').hide();
         //$('#upload').val('Upload');
         console.log(data.result);
-        //$('#flash_notice').html("#{raw(flash_display)}");
+        var url = '/notification/success/Upload_successful';
+        $('#flash_notice').load(url);
         $('#uploaded_documents').hide().html("<img src='/t/" + data.result._id + "'></img>").fadeIn('slow');
       }
 

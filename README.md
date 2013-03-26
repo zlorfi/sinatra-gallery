@@ -7,6 +7,7 @@
 - [Dragonfly](https://github.com/markevans/dragonfly)
 - [Mongoid](https://github.com/mongoid/mongoid)
 - [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
+- [fancyBox](https://github.com/fancyapps/fancyBox)
 
 ## !!WORK STILL IN PROGRESS!!
 
@@ -19,5 +20,4 @@
 
 ## TODO
 - image handler exception
-- show flash message with xhr request
-- add jQuery gallery function
+- don't load all images at once

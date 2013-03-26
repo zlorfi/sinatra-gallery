@@ -1,67 +1,44 @@
-
-
 .row
   .large-8.columns
-    =# @pictures.count
-    -#%ul{"data-options" => "timer_speed:2500;", "data-orbit" => ""}
+    %ul.small-block-grid-4.large-block-grid-6
       - @pictures.each do |key|
         %li
-          %img{:src => "#{key.image.thumb('600x600').url}"}/
-          .orbit-caption "Taken on #{key.image_date} with #{key.image_model} (#{key.id})"
-  
-    -#%ul.small-block-grid-2.large-block-grid-4
-      - @pictures.each do |key|
-        %li
-          %a{:href => "#{key.image.thumb('800x800').url}"}
-            %img{:src => "#{key.image.thumb('200x200#').url}", :alt => "#{key.image_name}"}
+          %a{:href => "#{key.image.thumb('800x800').url}", :class => 'fancybox', 'data-fancybox-group' => 'button', :title => "#{key.image_title}"}
+            %img{:src => "#{key.image.thumb('100x100#').url}"}
             -if admin?
               %form(action="/delete/#{key.id}" method="post")
                 %input{:type => :hidden, :name => "_method", :value => "delete"}
                 %a.tiny.button.info.radius{:href => "/i/#{key.id}"} Show
                 %input.tiny.button.alert.radius{:type => "submit", :value => "Delete"}
-    .gallery
-      %ul#carousel.elastislide-list
-        - @pictures.each do |key|
-          %li{'data-preview' => "#{key.image.thumb('800x800').url}"}
-            %a{:href => '#'}
-              %img{:src => "#{key.image.thumb('100x100#').url}", :alt => "#{key.image_name}"}
-
-      .image-preview
-        %img#preview{:src => '#'}
 
   = haml :sidebar
 
--#%script{:type => "text/javascript", :src => "/javascripts/vendor/modernizr.all.js"}
--#%script{:type => "text/javascript", :src => "/javascripts/vendor/modernizr.custom.17475.js"}
-%script{:type => "text/javascript", :src => "/javascripts/vendor/jquerypp.custom.js"}
-%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.elastislide.js"}
+%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.mousewheel.js"}
+%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.fancybox.pack.js"}
 :javascript
-  var current = 0,
-  $preview = $( '#preview' ),
-  $carouselEl = $( '#carousel' ),
-  $carouselItems = $carouselEl.children(),
-  carousel = $carouselEl.elastislide( {
-    current : current,
-    minItems : 4,
-    onClick : function( el, pos, evt ) {
+  $(document).ready(function() {
 
-      changeImage( el, pos );
-      evt.preventDefault();
+    $('.fancybox').fancybox({
+      openEffect: 'none',
+      closeEffect: 'none',
 
-    },
-    onReady : function() {
+      prevEffect: 'none',
+      nextEffect: 'none',
 
-      changeImage( $carouselItems.eq( current ), current );
-      
-    }
-  } );
+      //autoPlay: true,
+      loop: false,
 
-  function changeImage( el, pos ) {
+      //closeBtn  : false,
 
-    $preview.attr( 'src', el.data( 'preview' ) ).hide().fadeIn('slow');
-    $carouselItems.removeClass( 'current-img' );
-    el.addClass( 'current-img' );
-    carousel.setCurrent( pos );
+      helpers: {
+        title: {
+          type: 'inside'
+        }
+      },
 
-  }
+      afterLoad : function() {
+        this.title = 'Bild ' + (this.index + 1) + ' von ' + this.group.length + (this.title ? ' - ' + this.title : '');
+      }
+    });
 
+  });

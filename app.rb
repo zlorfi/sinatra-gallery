@@ -98,18 +98,6 @@ class App < Sinatra::Base
       #halt haml :index unless admin?
     end
 
-    def flash_display
-      response = ""
-      unless flash.nil?
-        flash.now[:success] = "Upload successful of"
-        #flash.each do |name, msg|
-        #  response = response + content_tag(:div, msg, :id => "flash_#{name}")
-        #end
-        #flash.discard
-        #response
-      end
-    end
-
     def raw(text)
       Rack::Utils.escape_html(text)
     end
@@ -120,6 +108,15 @@ class App < Sinatra::Base
     content_type "text/css", charset: "utf-8"
     response['Expires'] = (Time.now + 60*60*24*356*3).httpdate
     scss :"sass/#{path}"
+  end
+
+  get '/notification/:type/:message' do
+    if request.xhr?
+      flash.now[:"#{params[:type]}"] = params[:message].split('_').join(' ')
+      haml :notification, :layout => !request.xhr?
+    else
+      redirect '/'
+    end
   end
 
   post '/login' do
@@ -158,13 +155,11 @@ class App < Sinatra::Base
                                image_date: Time.now
                               )
 
-      flash[:success] = "Upload successful of #{filename}" if !request.xhr?
+      flash[:success] = "Upload successful of #{filename}"
       redirect "/i/#{picture.id}" if !request.xhr?
-      #flash.keep unless request.xhr?
       picture.to_json
     else
       flash[:alert] = 'You have to choose a file first'
-      #flash.keep unless request.xhr?
       redirect "/upload"
     end
 
