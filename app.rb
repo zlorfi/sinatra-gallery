@@ -102,6 +102,10 @@ class App < Sinatra::Base
       Rack::Utils.escape_html(text)
     end
 
+    def count_all_pictures
+      Picture.count.to_s
+    end
+
   end
 
   get "/stylesheets/*.css" do |path|
@@ -185,6 +189,14 @@ class App < Sinatra::Base
     else
       flash[:alert] = "ERROR!"
     end
+  end
+
+  get '/gallery/:items/:skip' do
+    if params[:items] && params[:skip]
+      @pictures = Picture.all.asc(:image_date).limit(params[:items]).skip(params[:skip])
+      haml :gallery, :layout => false #!request.xhr?
+    else
+      flash.now[:alert] = "ERROR!"
   end
 
   get '/' do

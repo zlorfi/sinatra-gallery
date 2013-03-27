@@ -20,4 +20,4 @@
 
 ## TODO
 - image handler exception
-- don't load all images at once
+- multi-upload

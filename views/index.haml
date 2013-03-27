@@ -1,22 +1,46 @@
 .row
   .large-8.columns
-    %ul.small-block-grid-4.large-block-grid-6
-      - @pictures.each do |key|
-        %li
-          %a{:href => "#{key.image.thumb('800x800').url}", :class => 'fancybox', 'data-fancybox-group' => 'button', :title => "#{key.image_title}"}
-            %img{:src => "#{key.image.thumb('100x100#').url}"}
-            -if admin?
-              %form(action="/delete/#{key.id}" method="post")
-                %input{:type => :hidden, :name => "_method", :value => "delete"}
-                %a.tiny.button.info.radius{:href => "/i/#{key.id}"} Show
-                %input.tiny.button.alert.radius{:type => "submit", :value => "Delete"}
+    %ul#gallery.small-block-grid-4.large-block-grid-6
+      =# haml :gallery 
+
+    #load_more
+      .small.button.expand.radius
+        %i.icon-cloud-download.icon-2x 
+        Load more
 
   = haml :sidebar
 
 %script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.mousewheel.js"}
 %script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.fancybox.pack.js"}
 :javascript
+  $(document).ajaxStart(function() {
+    $('#load_more i').removeClass('icon-cloud-download').addClass('icon-spinner icon-spin');
+  }).ajaxStop(function() {
+    $('#load_more i').removeClass('icon-spinner icon-spin').addClass('icon-cloud-download');
+  });
+
   $(document).ready(function() {
+
+    var items = 12;
+    var skip = 12;
+
+    $.get('/gallery/' + items + '/0', function(data){
+      $(data).appendTo("#gallery");
+    });
+
+      $('#load_more').click(function(data){
+        if(skip < "#{count_all_pictures}") {
+          console.log(skip);
+          console.log("#{count_all_pictures}");
+          $.get('/gallery/' + items + '/' + skip, function(data){ 
+            $(data).appendTo("#gallery");
+            skip += 12;
+          });
+        }
+        else {
+          $('#load_more').hide();
+        }
+      });
 
     $('.fancybox').fancybox({
       openEffect: 'none',
