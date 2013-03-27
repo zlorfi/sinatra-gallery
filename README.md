@@ -15,9 +15,8 @@
 
 - `bundle install`
 - start `mongodb`
-- `bundle exec shotgun config.ru` for development
+- `bundle exec shotgun config.ru` for development (a bit of a warning, `rack_flash` doesn't seem to work with `shotgun`)
 - `bundle exec puma config.ru` for production
 
 ## TODO
 - image handler exception
-- multi-upload

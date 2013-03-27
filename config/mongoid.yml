@@ -6,3 +6,11 @@ development:
         - localhost:27017
   options:
     raise_not_found_error: false
+production:
+  sessions:
+    default:
+      database: sinatra_gallery_production
+      hosts:
+        - localhost:27017
+  options:
+    raise_not_found_error: false

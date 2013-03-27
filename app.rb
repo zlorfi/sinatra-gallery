@@ -44,7 +44,7 @@ class App < Sinatra::Base
     enable :sessions
     use Rack::Flash, :sweep => true
 
-    #necessary for the DELETE route when using 
+    #necessary for the DELETE route
     use Rack::MethodOverride
 
     set :username,'gallery'
@@ -197,6 +197,7 @@ class App < Sinatra::Base
       haml :gallery, :layout => false #!request.xhr?
     else
       flash.now[:alert] = "ERROR!"
+    end
   end
 
   get '/' do
