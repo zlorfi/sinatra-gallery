@@ -1,7 +1,7 @@
 .row
   .large-8.columns
     %ul#gallery.small-block-grid-4.large-block-grid-6
-      =# haml :gallery 
+      =# haml :gallery if !request.xhr?
 
     #load_more
       .small.button.expand.radius
@@ -21,26 +21,29 @@
 
   $(document).ready(function() {
 
-    var items = 12;
-    var skip = 12;
+    var items = 15;
+    var skip = items;
 
     $.get('/gallery/' + items + '/0', function(data){
       $(data).appendTo("#gallery");
+      if (skip >= "#{count_all_pictures}") {
+        $('#load_more').hide();
+      }
     });
 
-      $('#load_more').click(function(data){
-        if(skip < "#{count_all_pictures}") {
-          console.log(skip);
-          console.log("#{count_all_pictures}");
-          $.get('/gallery/' + items + '/' + skip, function(data){ 
-            $(data).appendTo("#gallery");
-            skip += 12;
-          });
-        }
-        else {
-          $('#load_more').hide();
-        }
-      });
+    $('#load_more').click(function(data){
+      if(skip < "#{count_all_pictures}") {
+        console.log(skip);
+        console.log("#{count_all_pictures}");
+        $.get('/gallery/' + items + '/' + skip, function(data){ 
+          $(data).appendTo("#gallery");
+          skip += 12;
+        });
+      }
+      else {
+        $('#load_more').hide();
+      }
+    });
 
     $('.fancybox').fancybox({
       openEffect: 'none',

@@ -147,10 +147,10 @@ class App < Sinatra::Base
   post "/upload" do
     protected!
     content_type 'application/json', :charset => 'utf-8' if request.xhr?
-    if params[:file]
+    if params[:file] && params[:file][:type].match(/image\/(gif|png|jpe?g)/)
       filename = params[:file][:filename]
       file = params[:file][:tempfile]
-
+      
       prepared_image = app.fetch_file(file).process!(:resize, '800x800>')
       image_uid = app.store(prepared_image, :meta => {:upload_time => Time.now, :name => filename})
       picture = Picture.create(image_uid: image_uid, 
@@ -163,7 +163,7 @@ class App < Sinatra::Base
       redirect "/i/#{picture.id}" if !request.xhr?
       picture.to_json
     else
-      flash[:alert] = 'You have to choose a file first'
+      flash[:alert] = 'You have to choose an image file first'
       redirect "/upload"
     end
 
@@ -183,9 +183,14 @@ class App < Sinatra::Base
     protected!
     p = Picture.find(params[:image_id])
     if p.delete
-      File.delete("upload/#{p.image_uid}")
-      flash[:success] = "Image #{p.image_name} has been deleted"
-      redirect '/'
+      begin
+        File.delete("upload/#{p.image_uid}")
+        flash[:success] = "Image #{p.image_name} has been deleted"
+        redirect '/'
+      rescue => e
+        flash[:alert] = "ERROR! #{e.message}"
+        redirect '/'
+      end
     else
       flash[:alert] = "ERROR!"
     end
@@ -194,7 +199,7 @@ class App < Sinatra::Base
   get '/gallery/:items/:skip' do
     if params[:items] && params[:skip]
       @pictures = Picture.all.asc(:image_date).limit(params[:items]).skip(params[:skip])
-      haml :gallery, :layout => false #!request.xhr?
+      haml :gallery, :layout => !request.xhr?
     else
       flash.now[:alert] = "ERROR!"
     end

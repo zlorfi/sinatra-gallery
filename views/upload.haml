@@ -8,7 +8,7 @@
             %label Title
             %input.title{:type => "text", :placeholder => "Insert Title", :name => :title}
             %label File
-            %input.file{:type => :file, :name => :file, :multiple => ""}
+            %input.file{:type => :file, :name => :file, :multiple => "", :accept => 'image/*'}
             -#%input.small.button{:type => "submit" ,:value => "Upload", :id => 'upload'}
 
         #progress_bar
@@ -26,6 +26,10 @@
 
     $('#file_upload').fileupload({
       autoUpload: true,
+      limitMultiFileUploads: 5,
+      maxNumberOfFiles: 5,
+      maxFileSize: 10000000,
+      acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
       add: function (event, data) {
         $.ajax({
           url: '/upload',
