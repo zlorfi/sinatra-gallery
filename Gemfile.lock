@@ -17,6 +17,7 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
+    dalli (2.3.0)
     dragonfly (0.9.14)
       multi_json (~> 1.0)
       rack
@@ -65,6 +66,7 @@ PLATFORMS
 DEPENDENCIES
   bson_ext
   compass
+  dalli
   dragonfly
   haml
   mongoid

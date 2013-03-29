@@ -10,6 +10,7 @@ gem 'dragonfly'
 gem 'bson_ext'
 gem 'mongoid'
 gem 'rack-flash3'
+gem 'dalli'
 
 group :development do
   gem 'shotgun'

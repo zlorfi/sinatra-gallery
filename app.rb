@@ -151,7 +151,7 @@ class App < Sinatra::Base
       filename = params[:file][:filename]
       file = params[:file][:tempfile]
       
-      prepared_image = app.fetch_file(file).process!(:resize, '800x800>')
+      prepared_image = app.fetch_file(file).process!(:resize, '1000x1000>')
       image_uid = app.store(prepared_image, :meta => {:upload_time => Time.now, :name => filename})
       picture = Picture.create(image_uid: image_uid, 
                                image_name: filename, 

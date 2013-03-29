@@ -17,6 +17,7 @@
 - start `mongodb`
 - create `tmp` and `upload` directories (`mkdir tmp upload`) and make them writable for your Apache
 - install ImageMagic (`apt-get -y install imagemagick` or `yum -y install ImageMagick.x86_64`)
+- install `memcached` for production caching
 - `bundle exec shotgun config.ru` for development (a bit of a warning, `rack_flash` doesn't seem to work with `shotgun`)
 - `bundle exec puma config.ru` for production
 

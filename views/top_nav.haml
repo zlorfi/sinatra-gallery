@@ -1,38 +1,25 @@
-%nav.top-bar
-  %ul.title-area
-    / Title Area
-    %li.name
-      %h1.subheader
-        %a{:href => "/"}
-          %i.icon-camera-retro.icon-large 
-          Sinatra Gallery
-    / Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone
-    %li.toggle-topbar.menu-icon
-      %a{:href => "/"}
-        %span Menu
-  %section.top-bar-section
-    / Left Nav Section
-    %ul.left
+.large-4.columns
+  %h3.subheader
+    %i.icon-camera-retro.icon-large 
+    %a{:href => "/"}
+      Sinatra Gallery
+
+.large-8.columns
+  %ul.inline-list.right
+    -if admin?
       %li
-    / Right Nav Section
-    %ul.right
-      %li.divider.hide-for-small
+        %a{:href => "/upload"}
+          %i.icon-upload.icon-large 
+          Upload
+    %li
       -if admin?
-        %li
-          %a{:href => "/upload"}
-            %i.icon-upload.icon-large 
-            Upload
-        %li.divider
-      %li.divider.show-for-small
-      %li
-        -if admin?
-          %a{:href => '/logout'}
-            %i.icon-lock.icon-large 
-            Logout
-        -else
-          %a{:href => '#', "data-reveal-id" => "login"}
-            %i.icon-unlock.icon-large 
-            Login
+        %a{:href => '/logout'}
+          %i.icon-lock.icon-large 
+          Logout
+      -else
+        %a{:href => '#', "data-reveal-id" => "login"}
+          %i.icon-unlock.icon-large 
+          Login
 
 #login.reveal-modal.medium
   %form(action="/login" method="post")
