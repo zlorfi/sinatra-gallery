@@ -1,48 +1,45 @@
 .row
   .large-8.columns
     %ul#gallery.small-block-grid-4.large-block-grid-6
-      =# haml :gallery if !request.xhr?
-
-    #load_more
-      .small.button.expand.radius
-        %i.icon-cloud-download.icon-2x 
-        Load more
+      - @pictures.each do |key|
+        %li
+          %a{:href => "#{key.image.thumb('800x800').url}", :class => 'fancybox', 'data-fancybox-group' => 'button', :title => "#{key.image_title}"}
+            %img.lazy{'data-original' => "#{key.image.thumb('100x100#').url}", :src => "/image/grey.gif"}
+          -if admin?
+            %form(action="/delete/#{key.id}" method="post")
+              %input{:type => :hidden, :name => "_method", :value => "delete"}
+              -#%a.tiny.button.info.radius{:href => "/i/#{key.id}"} Show
+              %input.tiny.button.alert.radius{:type => "submit", :value => "Delete"}
+    .holder
 
   = haml :sidebar
 
 %script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.mousewheel.js"}
 %script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.fancybox.pack.js"}
+%script{:src => "/javascripts/vendor/jquery.lazyload.min.js", :type => 'text/javascript'}
+%script{:src => "/javascripts/vendor/jPages.min.js", :type => 'text/javascript'}
 :javascript
-  $(document).ajaxStart(function() {
-    $('#load_more i').removeClass('icon-cloud-download').addClass('icon-spinner icon-spin');
-  }).ajaxStop(function() {
-    $('#load_more i').removeClass('icon-spinner icon-spin').addClass('icon-cloud-download');
-  });
-
   $(document).ready(function() {
 
-    var items = 12;
-    var skip = items;
-
-    $.get('/gallery/' + items + '/0', function(data){
-      $(data).appendTo("#gallery");
-      if (skip >= "#{count_all_pictures}") {
-        $('#load_more').hide();
-      }
+    $("img").lazyload({
+      event: "turnPage",
+      effect: "fadeIn"
     });
 
-    $('#load_more').click(function(data){
-      if(skip < "#{count_all_pictures}") {
-        console.log(skip);
-        console.log("#{count_all_pictures}");
-        $.get('/gallery/' + items + '/' + skip, function(data){ 
-          $(data).appendTo("#gallery");
-          skip += 12;
-        });
-      }
-      else {
-        $('#load_more').hide();
-      }
+    $(".holder").jPages({
+      containerID: "gallery",
+      animation: "flipInY",
+      direction: "random",
+      perPage: 18,
+      keyBrowse: true,
+      previous : "←",
+      next : "→",
+      callback: function(pages, items ){
+        /* lazy load current images */
+        items.showing.find("img").trigger("turnPage");
+        /* lazy load next page images */
+        items.oncoming.find("img").trigger("turnPage");
+       }
     });
 
     $('.fancybox').fancybox({

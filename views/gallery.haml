@@ -1,9 +1,0 @@
-- @pictures.each do |key|
-  %li
-    %a{:href => "#{key.image.thumb('800x800').url}", :class => 'fancybox', 'data-fancybox-group' => 'button', :title => "#{key.image_title}"}
-      %img{:src => "#{key.image.thumb('100x100#').url}"}
-      -if admin?
-        %form(action="/delete/#{key.id}" method="post")
-          %input{:type => :hidden, :name => "_method", :value => "delete"}
-          %a.tiny.button.info.radius{:href => "/i/#{key.id}"} Show
-          %input.tiny.button.alert.radius{:type => "submit", :value => "Delete"}

@@ -26,10 +26,6 @@
 
     $('#file_upload').fileupload({
       autoUpload: true,
-      limitMultiFileUploads: 5,
-      maxNumberOfFiles: 5,
-      maxFileSize: 10000000,
-      acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
       add: function (event, data) {
         $.ajax({
           url: '/upload',
