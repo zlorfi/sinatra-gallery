@@ -37,6 +37,8 @@ class App < Sinatra::Base
       config.http_path = "/"
       config.http_images_path = "/images"
       config.http_stylesheets_path = "/stylesheets"
+      config.line_comments = false
+      config.output_style = :compressed
     end
 
     set :scss, Compass.sass_engine_options
