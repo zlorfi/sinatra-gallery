@@ -12,13 +12,10 @@
     %meta{:content => "width=device-width", :name => "viewport"}/
     %title Sinatra Gallery
     / Included CSS Files
-    %link{:href => asset_stylesheet('normalize'), :rel => "stylesheet"}
     %link{:href => asset_stylesheet('app'), :rel => "stylesheet"}
-    %link{:href => asset_stylesheet('font-awesome'), :rel => "stylesheet"}
-    %link{:href => asset_stylesheet('fancybox'), :rel => "stylesheet"}
     
-    %script{:src => "/javascripts/vendor/jquery.min.js", :type => 'text/javascript'}
-    %script{:src => "/javascripts/vendor/modernizr.custom.js", :type => 'text/javascript'}
+    %script{:src => asset_javascript('jquery.min'), :type => 'text/javascript'}
+    %script{:src => asset_javascript('modernizr.custom'), :type => 'text/javascript'}
     %script{:src => asset_javascript('app'), :type => 'text/javascript'}
     /:javascript
     /  document.write('<script src=' +

@@ -17,9 +17,9 @@
       .large-6.columns
         #uploaded_documents
 
-%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.ui.widget.js"}
--#%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.iframe-transport.js"}
-%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.fileupload.js"}
+%script{:src => asset_javascript('jquery.ui.widget'), :type => "text/javascript"}
+-#%script{:src => asset_javascript('jquery.iframe-transport'), :type => "text/javascript"}
+%script{:src => asset_javascript('jquery.fileupload'), :type => "text/javascript"}
 :javascript
   $(document).ready(function() {
     $('#progress_bar').hide();

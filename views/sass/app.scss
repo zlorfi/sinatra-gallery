@@ -1,10 +1,12 @@
 // Global Foundation Settings
+@import "normalize";
 @import "settings";
 
 // Comment out this import if you are customizing you imports below
 @import "foundation";
 
 @import 'font-awesome';
+@import 'fancybox';
 
 // Import specific parts of Foundation by commenting the import "foundation"
 // and uncommenting what you want below. You must uncomment the following if customizing
@@ -46,9 +48,30 @@
 // @import "foundation/components/tooltips";
 // @import "foundation/components/dropdown";
 
+// body
+body {
+//background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNiIgaGVpZ2h0PSI2Ij4KPHJlY3Qgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iI2VlZWVlZSI+PC9yZWN0Pgo8ZyBpZD0iYyI+CjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjMiIGZpbGw9IiNlNmU2ZTYiPjwvcmVjdD4KPHJlY3QgeT0iMSIgd2lkdGg9IjMiIGhlaWdodD0iMiIgZmlsbD0iI2Q4ZDhkOCI+PC9yZWN0Pgo8L2c+Cjx1c2UgaHJlZj0iI2MiIHg9IjMiIHk9IjMiPjwvdXNlPgo8L3N2Zz4=");
+}
+
+a.title {
+  font-family: 'gallery_font';
+}
+
+$fontAwesomePath:   "../font" !default;
+
+@font-face {
+  font-family: 'gallery_font';
+  src: url('#{$fontAwesomePath}/gallery_font-webfont.eot');
+  src: url('#{$fontAwesomePath}/gallery_font-webfont.eot?#iefix') format('embedded-opentype'),
+       url('#{$fontAwesomePath}/gallery_font-webfont.woff') format('woff'),
+       url('#{$fontAwesomePath}/gallery_font-webfont.ttf') format('truetype'),
+       url('#{$fontAwesomePath}/gallery_font-webfont.svg#julius_sans_oneregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
 
 // jPages.js
-.holder {
+.paging {
   margin: 15px 0;
   a {
     font-size: 15px;
@@ -66,27 +89,27 @@
       margin-left: 10px;
     }
     &.jp-current {
-      color: #FF4242;
+      color: #ff4242;
       font-weight: bold;
     }
   }
 }
 
 a.jp-current:hover {
-  color: #FF4242;
+  color: #ff4242;
   font-weight: bold;
 }
 
-.holder a.jp-disabled, a.jp-disabled:hover {
+.paging a.jp-disabled, a.jp-disabled:hover {
   color: #bbb;
 }
 
-.holder a.jp-current, a.jp-current:hover, .holder a.jp-disabled, a.jp-disabled:hover {
+.paging a.jp-current, a.jp-current:hover, .paging a.jp-disabled, a.jp-disabled:hover {
   cursor: default;
   background: none;
 }
 
-.holder span {
+.paging span {
   margin: 0 5px;
 }
 

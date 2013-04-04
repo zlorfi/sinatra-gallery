@@ -1,36 +1,71 @@
 .row
   .large-8.columns
-    %ul#gallery.small-block-grid-4.large-block-grid-6
+    %ul#gallery.small-block-grid-2.large-block-grid-4
       - @pictures.each do |key|
         %li
-          %a{:href => "#{key.image.thumb('800x800').url}", :class => 'fancybox', 'data-fancybox-group' => 'button', :title => "#{key.image_title}"}
-            %img.lazy{'data-original' => "#{key.image.thumb('100x100#').url}", :src => "/image/grey.gif"}
+          %a.fancybox{:href => "#{key.image.thumb('800x800').url}", 'data-fancybox-group' => 'button', :title => "#{key.image_title}"}
+            %img.lazy{'data-original' => "#{key.image.thumb('200x200#').url}", :src => "/image/grey.gif"}
           -if admin?
             %form(action="/delete/#{key.id}" method="post")
               %input{:type => :hidden, :name => "_method", :value => "delete"}
               -#%a.tiny.button.info.radius{:href => "/i/#{key.id}"} Show
               %input.tiny.button.alert.radius{:type => "submit", :value => "Delete"}
-    .holder
+    
+    .row
+      .large-6.columns
+        .paging
+      -#.large-6.columns
+        %form.custom.right
+          %label{:for => "customDropdown"} Bilder pro Seite
+          %select#customDropdown.small
+            %option 12
+            %option 18
+            %option alle
 
   = haml :sidebar
 
-%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.mousewheel.js"}
-%script{:type => "text/javascript", :src => "/javascripts/vendor/jquery.fancybox.pack.js"}
-%script{:src => "/javascripts/vendor/jquery.lazyload.min.js", :type => 'text/javascript'}
-%script{:src => "/javascripts/vendor/jPages.min.js", :type => 'text/javascript'}
+%script{:src => asset_javascript('jquery.fancybox.pack'), :type => "text/javascript"}
+%script{:src => asset_javascript('jquery.lazyload.min'), :type => 'text/javascript'}
+%script{:src => asset_javascript('jPages.min'), :type => 'text/javascript'}
 :javascript
   $(document).ready(function() {
+
+    //$('#gallery img').addClass('animated flipInY');
+
+    //$("select#customDropdown").change(function(){
+    //  /* get new nº of items per page */
+    //  if ($.isNumeric(parseInt( $(this).val() ))) {
+    //    /* destroy jPages and initiate plugin again */
+    //    $(".paging").jPages("destroy").jPages({
+    //      containerID: "gallery",
+    //      perPage: $(this).val(),
+    //      //animation: "flipInY",
+    //      direction: "random",
+    //      keyBrowse: true,
+    //      previous : "←",
+    //      next : "→",
+    //      callback: function(pages, items ){
+    //        /* lazy load current images */
+    //        items.showing.find("img").trigger("turnPage");
+    //        /* lazy load next page images */
+    //        items.oncoming.find("img").trigger("turnPage");
+    //      }
+    //    });
+    //  } else {
+    //    $(".paging").jPages("destroy"); 
+    //  }
+    //});
 
     $("img").lazyload({
       event: "turnPage",
       effect: "fadeIn"
     });
 
-    $(".holder").jPages({
+    $(".paging").jPages({
       containerID: "gallery",
       animation: "flipInY",
       direction: "random",
-      perPage: 18,
+      perPage: 12,
       keyBrowse: true,
       previous : "←",
       next : "→",

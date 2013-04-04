@@ -8,6 +8,7 @@
 - [Mongoid](https://github.com/mongoid/mongoid)
 - [jQuery-File-Upload](https://github.com/blueimp/jQuery-File-Upload)
 - [fancyBox](https://github.com/fancyapps/fancyBox)
+- [lazyload](https://github.com/tuupola/jquery_lazyload)
 
 ## !!WORK STILL IN PROGRESS!!
 
@@ -24,8 +25,8 @@
 ## TODO
 - image handler exception
 - store already loaded images in session
-- fix a whimsical doubling bug when showing images
 - huge multiupload of images causes failed images to load in gallery overview
+- add images per page option to paging
 
 ## Copyright
 (The MIT license)
