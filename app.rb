@@ -49,6 +49,7 @@ class App < Sinatra::Base
     #necessary for the DELETE route
     use Rack::MethodOverride
 
+    set :title, 'Sinatra Gallery'
     set :username,'gallery'
     set :password,'gallery'
     # make this a huge random number
@@ -102,6 +103,10 @@ class App < Sinatra::Base
 
     def raw(text)
       Rack::Utils.escape_html(text)
+    end
+
+    def page_title
+      settings.title
     end
 
   end

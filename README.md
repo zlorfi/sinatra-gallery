@@ -21,6 +21,7 @@
 - install `memcached` for production caching
 - `bundle exec shotgun config.ru` for development (a bit of a warning, `rack_flash` doesn't seem to work with `shotgun`)
 - `bundle exec puma config.ru` for production
+- change the setting of `title`, `username` and `password` and most important `token` 
 
 ## TODO
 - image handler exception
