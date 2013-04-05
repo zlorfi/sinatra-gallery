@@ -1,0 +1,6 @@
+title: 'Sinatra Gallery'
+username: 'gallery'
+password: 'gallery'
+# make this a huge random number
+# SecureRandom.urlsafe_base64(30, true)
+token: 'SzXdCtiS4hmt6gXhS4NIahrfL7iH7aUb0DXd-B35' 

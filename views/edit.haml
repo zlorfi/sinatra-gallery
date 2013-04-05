@@ -22,9 +22,9 @@
                   %label Title
                   %input{:type => 'text', :name => 'title', :value => "#{@picture.image_title}"}
               .row
-                .large-6.columns
+                .small-6.large-6.columns
                   %a.small.button.info.radius{:href => '/'} Go Back
-                .large-6.columns
+                .small-6.large-6.columns
                   %input{:type => :hidden, :name => "_method", :value => "put"}
                   %input.small.button.success.radius.right{:type => "submit", :value => "Update"}
           %form{:action => "/d/#{@picture.id}", :method => 'post'}

@@ -50,12 +50,11 @@ class App < Sinatra::Base
     #necessary for the DELETE route
     use Rack::MethodOverride
 
-    set :title, 'Sinatra Gallery'
-    set :username,'gallery'
-    set :password,'gallery'
-    # make this a huge random number
-    # SecureRandom.urlsafe_base64(30, true)
-    set :token,'SzXdCtiS4hmt6gXhS4NIahrfL7iH7aUb0DXd-B35' 
+    #store the data in a seperate config file
+    YAML::load(File.open('config/config.yml')).symbolize_keys.each do |key, value|
+      set key, value
+    end
+
   end
 
   class Picture
