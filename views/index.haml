@@ -6,9 +6,9 @@
           %a.fancybox{:href => "#{key.image.thumb('800x800').url}", 'data-fancybox-group' => 'button', :title => "#{key.image_title}"}
             %img.lazy{'data-original' => "#{key.image.thumb('200x200#').url}", :src => "/image/grey.gif"}
           -if admin?
-            %form(action="/delete/#{key.id}" method="post")
+            %form(action="/d/#{key.id}" method="post")
               %input{:type => :hidden, :name => "_method", :value => "delete"}
-              -#%a.tiny.button.info.radius{:href => "/i/#{key.id}"} Show
+              %a.tiny.button.info.radius{:href => "/e/#{key.id}"} Edit
               %input.tiny.button.alert.radius{:type => "submit", :value => "Delete"}
     
     .row
@@ -75,7 +75,7 @@
        }
     });
 
-    $('.fancybox').fancybox({
+    $('a.fancybox').fancybox({
       openEffect: 'none',
       closeEffect: 'none',
 
@@ -91,6 +91,12 @@
         title: {
           type: 'inside'
         }
+      },
+      beforeShow: function () {
+        /* Disable right click */
+        $.fancybox.wrap.bind("contextmenu", function (e) {
+          return false; 
+        });
       },
 
       afterLoad : function() {

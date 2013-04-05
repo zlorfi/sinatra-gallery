@@ -25,6 +25,7 @@ class App < Sinatra::Base
     d.datastore.root_path = File.join('upload')
     d.datastore.server_root = File.join('upload')
     d.url_format = '/images/:job/:basename.:format'
+    d.store_meta = false
   end
 
   Mongoid.load!('config/mongoid.yml', ENV['RACK_ENV'] )
@@ -155,7 +156,7 @@ class App < Sinatra::Base
       file = params[:file][:tempfile]
       
       prepared_image = app.fetch_file(file).process!(:resize, '1000x1000>')
-      image_uid = app.store(prepared_image, :meta => {:upload_time => Time.now, :name => filename})
+      image_uid = app.store(prepared_image)
       picture = Picture.create(image_uid: image_uid, 
                                image_name: filename, 
                                image_title: params[:title], 
@@ -163,7 +164,7 @@ class App < Sinatra::Base
                               )
 
       flash[:success] = "Upload successful of #{filename}"
-      redirect "/i/#{picture.id}" if !request.xhr?
+      redirect "/e/#{picture.id}" if !request.xhr?
       picture.to_json
     else
       flash[:alert] = 'You have to choose an image file first'
@@ -172,17 +173,25 @@ class App < Sinatra::Base
 
   end
 
-  get '/i/:image_id' do |image_id|
+  put '/e/:image_id' do |image_id|
+    protected!
+    picture = Picture.find(image_id)
+    picture.update_attributes(image_title: params[:title])
+    flash[:success] = "Update successful"
+    redirect "/"
+  end
+
+  get '/e/:image_id' do |image_id|
     @image = Picture.find(image_id).image
     @picture = Picture.find(image_id)
-    haml :show
+    haml :edit
   end
 
   get '/t/:image_id' do |image_id|
     Picture.find(image_id).image.thumb("400x400#").to_response(env)
   end
 
-  delete '/delete/:image_id' do
+  delete '/d/:image_id' do
     protected!
     p = Picture.find(params[:image_id])
     if p.delete

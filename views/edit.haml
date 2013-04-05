@@ -1,0 +1,34 @@
+.row
+  .large-12.columns
+    .row
+      .large-8.columns
+        -#%i#loading.icon-spinner.icon-spin.icon-2x
+        %img{:src => "#{@image.thumb('600x600').url}"}/
+        -# %img{:src => "#{@image.thumb("200x200").png.convert("-background #666666 +polaroid").url}"}/
+        -# %img{:src => "#{@image.thumb('200x220#').url}"}/
+
+
+      .large-4.columns
+        - if admin?
+          %form(action="/e/#{@picture.id}" method="post")
+            %fieldset
+              %legend Edit image
+              .row
+                .large-12.columns
+                  %label Picture ID
+                  %input{:type => 'text', :placeholder => "#{@picture.id}", :disabled => ""}
+              .row
+                .large-12.columns
+                  %label Title
+                  %input{:type => 'text', :name => 'title', :value => "#{@picture.image_title}"}
+              .row
+                .large-6.columns
+                  %a.small.button.info.radius{:href => '/'} Go Back
+                .large-6.columns
+                  %input{:type => :hidden, :name => "_method", :value => "put"}
+                  %input.small.button.success.radius.right{:type => "submit", :value => "Update"}
+          %form{:action => "/d/#{@picture.id}", :method => 'post'}
+            .row
+              .large-12.columns
+                %input{:type => :hidden, :name => "_method", :value => "delete"}
+                %input.small.button.alert.expand{:type => "submit", :value => "Delete this Image"}
