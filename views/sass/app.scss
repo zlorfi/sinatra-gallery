@@ -58,6 +58,10 @@ a.title {
   font-size: 50px;
 }
 
+#progress_bar {
+  display: none;
+}
+
 $fontAwesomePath:   "../font" !default;
 
 @font-face {

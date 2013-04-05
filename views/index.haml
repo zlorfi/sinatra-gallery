@@ -4,7 +4,7 @@
       - @pictures.each do |key|
         %li
           %a.fancybox{:href => "#{key.image.thumb('800x800').url}", 'data-fancybox-group' => 'button', :title => "#{key.image_title}"}
-            %img.lazy{'data-original' => "#{key.image.thumb('200x200#').url}", :src => "/image/grey.gif"}
+            %img.lazy{'data-original' => "#{key.image.thumb('200x200#ne').url}", :src => "/image/grey.gif"}
           -if admin?
             %form(action="/d/#{key.id}" method="post")
               %input{:type => :hidden, :name => "_method", :value => "delete"}
