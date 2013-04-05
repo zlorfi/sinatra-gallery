@@ -25,7 +25,7 @@ class App < Sinatra::Base
     d.datastore.root_path = File.join('upload')
     d.datastore.server_root = File.join('upload')
     d.url_format = '/images/:job/:basename.:format'
-    d.store_meta = false
+    d.datastore.store_meta = false
   end
 
   Mongoid.load!('config/mongoid.yml', ENV['RACK_ENV'] )
