@@ -190,9 +190,9 @@ class App < Sinatra::Base
     Picture.find(image_id).image.thumb("400x400#").to_response(env)
   end
 
-  delete '/d/:image_id' do
+  delete '/d/:image_id' do |image_id|
     protected!
-    p = Picture.find(params[:image_id])
+    p = Picture.find(image_id)
     if p.delete
       begin
         File.delete("upload/#{p.image_uid}")
