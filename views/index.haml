@@ -2,7 +2,7 @@
   .large-8.columns
     %ul#gallery.small-block-grid-2.large-block-grid-4
       - @pictures.each do |key|
-        %li
+        %li{'sort_key' => "#{key.sort_key}"}
           %a.fancybox{:href => "#{key.image.thumb('800x800').url}", 'data-fancybox-group' => 'button', :title => "#{key.image_title}"}
             %img.lazy{'data-original' => "#{key.image.thumb('200x200#ne').url}", :src => "/image/grey.gif"}
           -if admin?
@@ -27,6 +27,21 @@
 %script{:src => asset_javascript('jquery.fancybox.pack'), :type => "text/javascript"}
 %script{:src => asset_javascript('jquery.lazyload.min'), :type => 'text/javascript'}
 %script{:src => asset_javascript('jPages.min'), :type => 'text/javascript'}
+-if admin?
+  :javascript
+    $(document).ready(function() {
+      $( "#gallery" ).sortable({
+        distance: 30,
+        cursor: 'move',
+        update: function(event, ui) {
+          console.log('original:' + ui.item.attr('sort_key'));
+          console.log('item before:' + ui.item.prev().attr('sort_key'));
+          console.log('item after:' + ui.item.next().attr('sort_key'));
+        }
+      });
+      $( "#gallery" ).disableSelection();
+    });
+
 :javascript
   $(document).ready(function() {
 
@@ -53,6 +68,7 @@
     //    $(".paging").jPages("destroy"); 
     //  }
     //});
+
 
     $("img").lazyload({
       event: "turnPage",

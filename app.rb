@@ -59,15 +59,30 @@ class App < Sinatra::Base
 
   class Picture
     include Mongoid::Document
+    include Mongoid::Timestamps
+
+    validates_numericality_of :sort_key, only_integer: true, greater_than: 0
 
     field :image_uid
     field :image_name
     field :image_title
-    field :image_date
     field :image_model
     field :base_path
+    field :sort_key, type: Integer
+
+    before_update :sort_things_right
 
     image_accessor :image
+
+    def self.get_highest_key
+      c = desc(:sort_key).limit(1).first
+      c ? (c.sort_key + 1) : 1
+    end
+
+    def sort_things_right
+      p self.sort_key 
+    end
+
   end
 
   #before %r{\.(css)|(js)|(png)|(ico)} do
@@ -144,6 +159,7 @@ class App < Sinatra::Base
   end
 
   get "/upload" do
+    protected!
     haml :upload, :layout => !request.xhr?
   end
 
@@ -159,7 +175,7 @@ class App < Sinatra::Base
       picture = Picture.create(image_uid: image_uid, 
                                image_name: filename, 
                                image_title: params[:title], 
-                               image_date: Time.now
+                               sort_key: Picture.get_highest_key
                               )
 
       flash[:success] = "Upload successful of #{filename}"
@@ -175,7 +191,7 @@ class App < Sinatra::Base
   put '/e/:image_id' do |image_id|
     protected!
     picture = Picture.find(image_id)
-    picture.update_attributes(image_title: params[:title])
+    picture.update_attributes(image_title: params[:title], sort_key: params[:sort_key])
     flash[:success] = "Update successful"
     redirect "/"
   end
@@ -208,7 +224,7 @@ class App < Sinatra::Base
   end
 
   get '/' do
-    @pictures = Picture.all.asc(:image_date)
+    @pictures = Picture.all.asc(:sort_key)
     haml :index
   end
 

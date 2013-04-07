@@ -15,8 +15,9 @@
     %link{:href => asset_stylesheet('app'), :rel => "stylesheet"}
     
     %script{:src => asset_javascript('jquery.min'), :type => 'text/javascript'}
+    -if admin?
+      %script{:src => asset_javascript('jquery-ui-1.9.2.custom.min'), :type => "text/javascript"}
     %script{:src => asset_javascript('modernizr.custom'), :type => 'text/javascript'}
-    %script{:src => asset_javascript('app'), :type => 'text/javascript'}
     /:javascript
     /  document.write('<script src=' +
     /  ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
@@ -35,6 +36,7 @@
     =yield
 
     %script{:src => asset_javascript('foundation.min'), :type => 'text/javascript'}
+    %script{:src => asset_javascript('app'), :type => 'text/javascript'}
 
     :javascript
       $(document).foundation();
