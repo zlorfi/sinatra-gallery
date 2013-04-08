@@ -40,3 +40,21 @@
 
     :javascript
       $(document).foundation();
+    -if ENV['RACK_ENV'] == 'production'
+      / Piwik
+      :javascript
+        var _paq = _paq || [];
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+          var u=(("https:" == document.location.protocol) ? "https" : "http") + "://#{piwik_site}//";
+          _paq.push(['setTrackerUrl', u+'piwik.php']);
+          _paq.push(['setSiteId', "#{piwik_id}"]);
+          var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
+          g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+        })();
+
+      %noscript
+        %p
+          %img{:alt => "", :src => "http://#{piwik_site}/piwik.php?idsite=#{piwik_id}", :style => "border:0"}/
+      / End Piwik Code

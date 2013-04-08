@@ -112,6 +112,7 @@ class App < Sinatra::Base
 
     def protected!
       #halt [ 401, 'Not Authorized' ] unless admin?
+      flash[:alert] = 'Not Authorized!' unless admin?
       halt haml(:error) unless admin?
     end
 
@@ -121,6 +122,14 @@ class App < Sinatra::Base
 
     def page_title
       settings.title
+    end
+
+    def piwik_site
+      settings.piwik_site
+    end
+
+    def piwik_id
+      settings.piwik_id
     end
 
   end
