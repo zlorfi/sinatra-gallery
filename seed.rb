@@ -18,7 +18,7 @@ Dir.glob('./seed_files/*.gif') do |file|
   app = Dragonfly[:images].configure_with(:imagemagick)
   prepared_image = app.fetch_file(file).process!(:resize, '1000x1000>')
   image_uid = app.store(prepared_image)
-  picture = App::Picture.create(image_uid: image_uid, sort_key: App::Picture.get_highest_key)
+  picture = App::Picture.create(image_uid: image_uid, image_name: "#{file}.gif", sort_key: App::Picture.get_highest_key)
   p "Picture with ID #{picture.id} inserted"
 end
 
