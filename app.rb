@@ -111,9 +111,8 @@ class App < Sinatra::Base
     end
 
     def protected!
-      halt [ 401, 'Not Authorized' ] unless admin?
-      #flash[:alert] = "Login failed!"
-      #halt haml :index unless admin?
+      #halt [ 401, 'Not Authorized' ] unless admin?
+      halt haml(:error) unless admin?
     end
 
     def raw(text)
@@ -197,6 +196,7 @@ class App < Sinatra::Base
   end
 
   get '/e/:image_id' do |image_id|
+    protected!
     @image = Picture.find(image_id).image
     @picture = Picture.find(image_id)
     haml :edit
