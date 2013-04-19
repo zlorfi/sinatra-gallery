@@ -6,4 +6,3 @@ meta
 upload/*
 public/thumbnails
 config/config.yml
-config/newrelic.yml
