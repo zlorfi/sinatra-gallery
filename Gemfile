@@ -11,6 +11,8 @@ gem 'bson_ext'
 gem 'mongoid'
 gem 'rack-flash3'
 gem 'dalli'
+gem 'nokogiri'
+
 
 group :development do
   gem 'shotgun'

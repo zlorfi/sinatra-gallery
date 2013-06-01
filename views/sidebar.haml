@@ -1,4 +1,15 @@
 .large-4.columns.hide-for-small
-  .panel.radius
-    %h3.subheader Welcome to our Gallery
-    %p Enjoy your stay
+  %h4.subheader Unsere Amazon Wunschliste
+  -#%p Enjoy your stay
+  - doc = Nokogiri::HTML(open(@awl))
+  - doc.css('tbody[class=itemWrapper]').each do |item|
+    .panel.radius
+      .row
+        .large-5.columns
+          %img{:src => item.css('td[class="productImage"] img').attr('src').value}
+        .large-7.columns
+          -# %a{:href => item.css('span[class="small productTitle"] a').attr('href').value} 
+          %a{:href => @awl} 
+            = item.css('span[class="small productTitle"] a').text
+  
+  

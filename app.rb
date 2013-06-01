@@ -7,6 +7,8 @@ require 'haml'
 require 'dragonfly'
 require 'mongoid'
 require 'rack-flash'
+require 'nokogiri'
+require 'open-uri'
 
 class App < Sinatra::Base
 
@@ -233,6 +235,7 @@ class App < Sinatra::Base
   end
 
   get '/' do
+    @awl = "http://www.amazon.de/registry/wishlist/#{settings.amazon_whishlist}"
     @pictures = Picture.all.asc(:sort_key)
     haml :index
   end
