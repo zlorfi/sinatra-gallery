@@ -9,7 +9,7 @@
           %img{:src => item.css('td[class="productImage"] img').attr('src').value}
         .large-7.columns
           -# %a{:href => item.css('span[class="small productTitle"] a').attr('href').value} 
-          %a{:href => @awl} 
+          %a{:href => @awl, :target => '_blank'} 
             = item.css('span[class="small productTitle"] a').text
   
   
