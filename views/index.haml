@@ -11,16 +11,17 @@
               %a.tiny.button.info.radius{:href => "/e/#{key.id}"} Edit
               %input.tiny.button.alert.radius{:type => "submit", :value => "Delete"}
     
-    .row
-      .large-6.columns
-        .paging
-      -#.large-6.columns
-        %form.custom.right
-          %label{:for => "customDropdown"} Bilder pro Seite
-          %select#customDropdown.small
-            %option 12
-            %option 18
-            %option alle
+    - if @pictures.count > 12
+      .row
+        .large-6.columns
+          .paging
+        -#.large-6.columns
+          %form.custom.right
+            %label{:for => "customDropdown"} Bilder pro Seite
+            %select#customDropdown.small
+              %option 12
+              %option 18
+              %option alle
 
   = haml :sidebar
 

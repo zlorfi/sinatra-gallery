@@ -3,7 +3,10 @@ username: 'gallery'
 password: 'gallery'
 # make this a huge random number
 # SecureRandom.urlsafe_base64(30, true)
-token: 'SzXdCtiS4hmt6gXhS4NIahrfL7iH7aUb0DXd-B35' 
+login_token: 'SzXdCtiS4hmt6gXhS4NIahrfL7iH7aUb0DXd-B35' 
+# set to true or false if you want to protect your images
+use_view_token: true
+view_token: 'V1ez4ZL5CYQbhhSitQtHYoTICH1fhupaweqlAeZe'
 piwik_site: 'piwik.example.com'
 piwik_id: 1
-amazon_whishlist: 1234556789
+amazon_whishlist: '1234556789'

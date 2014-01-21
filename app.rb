@@ -109,13 +109,23 @@ class App < Sinatra::Base
     end
 
     def admin?
-      request.cookies[settings.username] == settings.token
+      request.cookies[settings.username] == settings.login_token
+    end
+
+    def got_token?
+      request.cookies['view_token'] == settings.view_token
     end
 
     def protected!
       #halt [ 401, 'Not Authorized' ] unless admin?
       flash[:alert] = 'Not Authorized!' unless admin?
       halt haml(:error) unless admin?
+    end
+
+    def need_token!
+      if settings.use_view_token
+        halt haml(:need_token) unless got_token?
+      end
     end
 
     def raw(text)
@@ -153,13 +163,28 @@ class App < Sinatra::Base
 
   post '/login' do
     if params['username']==settings.username && params['password']==settings.password
-      response.set_cookie(settings.username, {:value => settings.token, :expires => Time.now + (60*60*24*2)}) 
+      response.set_cookie(settings.username, {:value => settings.login_token, :expires => Time.now + (60*60*24*2)}) 
+      response.set_cookie('view_token', {:value => settings.view_token, :path => '/'}) if settings.use_view_token 
       flash[:success] = "Login succeeded!"
       redirect '/'
     else
       flash[:alert] = "Login failed!"
       redirect '/'
     end
+  end
+
+  get '/token/:token' do
+    if params[:token] == settings.view_token
+      response.set_cookie('view_token', {:value => settings.view_token, :path => '/'}) 
+      redirect '/'
+    else
+      redirect '/'
+    end
+  end
+
+  get '/dt' do
+    response.set_cookie('view_token', false)
+    redirect '/'
   end
 
   get '/logout' do
@@ -235,6 +260,7 @@ class App < Sinatra::Base
   end
 
   get '/' do
+    need_token!
     @awl = "http://www.amazon.de/registry/wishlist/#{settings.amazon_whishlist}"
     @pictures = Picture.all.asc(:sort_key)
     haml :index
