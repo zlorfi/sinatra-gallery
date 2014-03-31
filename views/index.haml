@@ -1,5 +1,13 @@
 .row
   .large-8.columns
+    %dl.sub-nav
+      %dt Filter:
+      = filter_item("/", "Alle")
+      - @all_year.each do |year|
+        = filter_item("/date/#{year}", "#{year}")
+
+.row
+  .large-8.columns
     %ul#gallery.small-block-grid-2.large-block-grid-4
       - @pictures.each do |key|
         %li{'sort_key' => "#{key.sort_key}"}
@@ -10,7 +18,7 @@
               %input{:type => :hidden, :name => "_method", :value => "delete"}
               %a.tiny.button.info.radius{:href => "/e/#{key.id}"} Edit
               %input.tiny.button.alert.radius{:type => "submit", :value => "Delete"}
-    
+
     - if @pictures.count > 12
       .row
         .large-6.columns
@@ -66,7 +74,7 @@
     //      }
     //    });
     //  } else {
-    //    $(".paging").jPages("destroy"); 
+    //    $(".paging").jPages("destroy");
     //  }
     //});
 
@@ -112,7 +120,7 @@
       beforeShow: function () {
         /* Disable right click */
         $.fancybox.wrap.bind("contextmenu", function (e) {
-          return false; 
+          return false;
         });
       },
 

@@ -82,7 +82,7 @@ class App < Sinatra::Base
     end
 
     def sort_things_right
-      p self.sort_key 
+      p self.sort_key
     end
 
   end
@@ -144,6 +144,13 @@ class App < Sinatra::Base
       settings.piwik_id
     end
 
+    def filter_item(url, text=url)
+      item = request.path_info == url ? "<dd class='active'>" : "<dd>"
+      item << "<a href='#{url}'>#{text}</a>"
+      item << "</dd>"
+      item
+    end
+
   end
 
   get "/stylesheets/*.css" do |path|
@@ -163,8 +170,8 @@ class App < Sinatra::Base
 
   post '/login' do
     if params['username']==settings.username && params['password']==settings.password
-      response.set_cookie(settings.username, {:value => settings.login_token, :expires => Time.now + (60*60*24*2)}) 
-      response.set_cookie('view_token', {:value => settings.view_token, :path => '/'}) if settings.use_view_token 
+      response.set_cookie(settings.username, {:value => settings.login_token, :expires => Time.now + (60*60*24*2)})
+      response.set_cookie('view_token', {:value => settings.view_token, :path => '/'}) if settings.use_view_token
       flash[:success] = "Login succeeded!"
       redirect '/'
     else
@@ -175,7 +182,7 @@ class App < Sinatra::Base
 
   get '/token/:token' do
     if params[:token] == settings.view_token
-      response.set_cookie('view_token', {:value => settings.view_token, :path => '/'}) 
+      response.set_cookie('view_token', {:value => settings.view_token, :path => '/'})
       redirect '/'
     else
       redirect '/'
@@ -204,12 +211,12 @@ class App < Sinatra::Base
     if params[:file] && params[:file][:type].match(/image\/(gif|png|jpe?g)/)
       filename = params[:file][:filename]
       file = params[:file][:tempfile]
-      
+
       prepared_image = app.fetch_file(file).process!(:resize, '1000x1000>')
       image_uid = app.store(prepared_image)
-      picture = Picture.create(image_uid: image_uid, 
-                               image_name: filename, 
-                               image_title: params[:title], 
+      picture = Picture.create(image_uid: image_uid,
+                               image_name: filename,
+                               image_title: params[:title],
                                sort_key: Picture.get_highest_key
                               )
 
@@ -259,9 +266,18 @@ class App < Sinatra::Base
     end
   end
 
+  get '/date/:date_time' do |date_time|
+    need_token!
+    @awl = "http://www.amazon.de/registry/wishlist/#{settings.amazon_whishlist}"
+    @all_year = Picture.all.map{|p| p.created_at.year}.uniq
+    @pictures = Picture.where(:created_at.gte => "#{date_time}-01-01", :created_at.lte => "#{date_time}-12-31")
+    haml :index
+  end
+
   get '/' do
     need_token!
     @awl = "http://www.amazon.de/registry/wishlist/#{settings.amazon_whishlist}"
+    @all_year = Picture.all.map{|p| p.created_at.year}.uniq
     @pictures = Picture.all.asc(:sort_key)
     haml :index
   end
