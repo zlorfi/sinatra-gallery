@@ -27,7 +27,6 @@
 - store already loaded images in session
 - huge multiupload of images causes failed images to load in gallery overview
 - add images per page option to paging
-- add image sorting
 - add multiple galleries
 
 ## Copyright

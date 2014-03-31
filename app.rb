@@ -270,7 +270,7 @@ class App < Sinatra::Base
     need_token!
     @awl = "http://www.amazon.de/registry/wishlist/#{settings.amazon_whishlist}"
     @all_year = Picture.all.map{|p| p.created_at.year}.uniq
-    @pictures = Picture.where(:created_at.gte => "#{date_time}-01-01", :created_at.lte => "#{date_time}-12-31")
+    @pictures = Picture.where(:created_at.gte => "#{date_time}-01-01", :created_at.lte => "#{date_time}-12-31").asc(:sort_key)
     haml :index
   end
 
