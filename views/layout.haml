@@ -4,19 +4,19 @@
 /[if IE 7] <html class="no-js lt-ie9 lt-ie8" lang="en">
 /[if IE 8] <html class="no-js lt-ie9" lang="en">
 / [if gt IE 8]><!
-%html.no-js{:lang => "de"}
+%html.no-js{:lang => 'de'}
   / <![endif]
   %head
-    %meta{:charset => "utf-8"}/
+    %meta{:charset => 'utf-8'}/
     / Set the viewport width to device width for mobile
-    %meta{:content => "width=device-width", :name => "viewport"}/
+    %meta{:content => 'width=device-width', :name => 'viewport'}/
     %title= page_title
     / Included CSS Files
-    %link{:href => asset_stylesheet('app'), :rel => "stylesheet"}
+    %link{:href => asset_stylesheet('app'), :rel => 'stylesheet'}
     
     %script{:src => asset_javascript('jquery.min'), :type => 'text/javascript'}
     -if admin?
-      %script{:src => asset_javascript('jquery-ui-1.9.2.custom.min'), :type => "text/javascript"}
+      %script{:src => asset_javascript('jquery-ui-1.9.2.custom.min'), :type => 'text/javascript'}
     %script{:src => asset_javascript('modernizr.custom'), :type => 'text/javascript'}
     /:javascript
     /  document.write('<script src=' +
@@ -24,7 +24,7 @@
     /  '.js><\/script>')
     / IE Fix for HTML5 Tags
     /[if lt IE 9]
-      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src='http://html5shiv.googlecode.com/svn/trunk/html5.js'></script>
   %body
     .row
       .large-12.columns
@@ -47,7 +47,7 @@
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function() {
-          var u=(("https:" == document.location.protocol) ? "https" : "http") + "://#{piwik_site}//";
+          var u=(('https:' == document.location.protocol) ? 'https' : 'http') + "://#{piwik_site}//";
           _paq.push(['setTrackerUrl', u+'piwik.php']);
           _paq.push(['setSiteId', "#{piwik_id}"]);
           var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
@@ -56,5 +56,5 @@
 
       %noscript
         %p
-          %img{:alt => "", :src => "http://#{piwik_site}/piwik.php?idsite=#{piwik_id}", :style => "border:0"}/
+          %img{:alt => '', :src => "http://#{piwik_site}/piwik.php?idsite=#{piwik_id}", :style => 'border:0'}/
       / End Piwik Code

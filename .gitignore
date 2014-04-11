@@ -6,3 +6,4 @@ meta
 upload/*
 public/thumbnails
 config/config.yml
+.idea

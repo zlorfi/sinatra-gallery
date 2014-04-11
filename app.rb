@@ -35,11 +35,11 @@ class App < Sinatra::Base
   configure do
     Compass.configuration do |config|
       config.project_path = File.dirname __FILE__
-      config.sass_dir = File.join "views", "scss"
-      config.images_dir = File.join "views", "images"
-      config.http_path = "/"
-      config.http_images_path = "/images"
-      config.http_stylesheets_path = "/stylesheets"
+      config.sass_dir = File.join 'views', 'scss'
+      config.images_dir = File.join 'views', 'images'
+      config.http_path = '/'
+      config.http_images_path = '/images'
+      config.http_stylesheets_path = '/stylesheets'
       config.line_comments = false
       config.output_style = :compressed
     end
@@ -94,18 +94,18 @@ class App < Sinatra::Base
   before do
     @p = Picture.all
     if @p.empty?
-      flash[:notice] = "No documents found!"
+      flash[:notice] = 'No documents found!'
     end
   end
 
 
   helpers do
     def asset_stylesheet(stylesheet)
-      "/stylesheets/#{stylesheet}.css?" + File.mtime(File.join(Sinatra::Application.views, "sass", "#{stylesheet}.scss")).to_i.to_s
+      "/stylesheets/#{stylesheet}.css?" + File.mtime(File.join(Sinatra::Application.views, 'sass', "#{stylesheet}.scss")).to_i.to_s
     end
 
     def asset_javascript(js)
-      "/javascripts/#{js}.js?" + File.mtime(File.join(Sinatra::Application.public_folder, "javascripts", "#{js}.js")).to_i.to_s
+      "/javascripts/#{js}.js?" + File.mtime(File.join(Sinatra::Application.public_folder, 'javascripts', "#{js}.js")).to_i.to_s
     end
 
     def admin?
@@ -153,8 +153,8 @@ class App < Sinatra::Base
 
   end
 
-  get "/stylesheets/*.css" do |path|
-    content_type "text/css", charset: "utf-8"
+  get '/stylesheets/*.css' do |path|
+    content_type 'text/css', charset: 'utf-8'
     response['Expires'] = (Time.now + 60*60*24*356*3).httpdate
     scss :"sass/#{path}"
   end
@@ -172,10 +172,10 @@ class App < Sinatra::Base
     if params['username']==settings.username && params['password']==settings.password
       response.set_cookie(settings.username, {:value => settings.login_token, :expires => Time.now + (60*60*24*2)})
       response.set_cookie('view_token', {:value => settings.view_token, :path => '/'}) if settings.use_view_token
-      flash[:success] = "Login succeeded!"
+      flash[:success] = 'Login succeeded!'
       redirect '/'
     else
-      flash[:alert] = "Login failed!"
+      flash[:alert] = 'Login failed!'
       redirect '/'
     end
   end
@@ -196,16 +196,16 @@ class App < Sinatra::Base
 
   get '/logout' do
     response.set_cookie(settings.username, false)
-    flash[:success] = "Logout successful!"
+    flash[:success] = 'Logout successful!'
     redirect '/'
   end
 
-  get "/upload" do
+  get '/upload' do
     protected!
     haml :upload, :layout => !request.xhr?
   end
 
-  post "/upload" do
+  post '/upload' do
     protected!
     content_type 'application/json', :charset => 'utf-8' if request.xhr?
     if params[:file] && params[:file][:type].match(/image\/(gif|png|jpe?g)/)
@@ -225,7 +225,7 @@ class App < Sinatra::Base
       picture.to_json
     else
       flash[:alert] = 'You have to choose an image file first'
-      redirect "/upload"
+      redirect '/upload'
     end
 
   end
@@ -246,7 +246,7 @@ class App < Sinatra::Base
   end
 
   get '/t/:image_id' do |image_id|
-    Picture.find(image_id).image.thumb("400x400#").to_response(env)
+    Picture.find(image_id).image.thumb('400x400#').to_response(env)
   end
 
   delete '/d/:image_id' do |image_id|
@@ -262,14 +262,14 @@ class App < Sinatra::Base
         redirect '/'
       end
     else
-      flash[:alert] = "ERROR!"
+      flash[:alert] = 'ERROR!'
     end
   end
 
   get '/date/:date_time' do |date_time|
     need_token!
     @awl = "http://www.amazon.de/registry/wishlist/#{settings.amazon_whishlist}"
-    @all_year = Picture.all.map{|p| p.created_at.year}.uniq
+    @all_year = Picture.all.map{|p| p.created_at.year}.uniq.sort
     @pictures = Picture.where(:created_at.gte => "#{date_time}-01-01", :created_at.lte => "#{date_time}-12-31").asc(:sort_key)
     haml :index
   end
@@ -277,13 +277,13 @@ class App < Sinatra::Base
   get '/' do
     need_token!
     @awl = "http://www.amazon.de/registry/wishlist/#{settings.amazon_whishlist}"
-    @all_year = Picture.all.map{|p| p.created_at.year}.uniq
+    @all_year = Picture.all.map{|p| p.created_at.year}.uniq.sort
     @pictures = Picture.all.asc(:sort_key)
     haml :index
   end
 
   not_found do
-    flash[:notice] = "404 - Page not found"
+    flash[:notice] = '404 - Page not found'
     redirect '/'
   end
 

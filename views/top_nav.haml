@@ -1,14 +1,14 @@
 .large-6.columns
   %h3.subheader
     -#%i.icon-camera-retro.icon-large 
-    %a.title{:href => "/"}
+    %a.title{:href => '/'}
       = page_title
 
 .large-6.columns
   %ul.inline-list.right
     -if admin?
       %li
-        %a{:href => "/upload"}
+        %a{:href => '/upload'}
           %i.icon-upload.icon-large 
           Upload
     %li
@@ -17,12 +17,12 @@
           %i.icon-lock.icon-large 
           Logout
       -else
-        %a{:href => '#', "data-reveal-id" => "login"}
+        %a{:href => '#', 'data-reveal-id' => 'login'}
           %i.icon-unlock.icon-large 
           Login
 
 #login.reveal-modal.medium
-  %form(action="/login" method="post")
+  %form(action='/login' method='post')
     %fieldset
       %legend Login
       %row
@@ -35,7 +35,7 @@
         .large-12.columns
           .row
             .large-6.small-6.columns
-              %input.small.button.success.radius.left{:type => "submit", :value => "Login"}
+              %input.small.button.success.radius.left{:type => 'submit', :value => 'Login'}
             .large-6.small-6.columns
-              %a.small.button.alert.radius.right{:href => "/"} Cancel
+              %a.small.button.alert.radius.right{:href => '/'} Cancel
   %a.close-reveal-modal &#215;

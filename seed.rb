@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'rubygems' unless RUBY_VERSION >= '1.9'
-require "./app"
+require './app'
 
 App::Picture.all.each do |p|
   if p.delete
@@ -27,5 +27,5 @@ def run(command)
   raise("error, process exited with status #{$?.exitstatus}") unless result
 end
 
-cmd = "bundle exec puma config.ru"
+cmd = 'bundle exec puma config.ru'
 run cmd

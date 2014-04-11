@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'sinatra', "~> 1.3"
+gem 'sinatra', '~> 1.3'
 gem 'compass'
 gem 'zurb-foundation'
 gem 'puma'

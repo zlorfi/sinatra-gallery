@@ -7,13 +7,13 @@
 
       .large-4.columns
         - if admin?
-          %form(action="/e/#{@picture.id}" method="post")
+          %form(action="/e/#{@picture.id}" method='post')
             %fieldset
               %legend Edit image
               .row
                 .large-12.columns
                   %label Picture ID
-                  %input{:type => 'text', :placeholder => "#{@picture.id}", :disabled => ""}
+                  %input{:type => 'text', :placeholder => "#{@picture.id}", :disabled => ''}
               .row
                 .large-12.columns
                   %label Sort key
@@ -26,10 +26,10 @@
                 .small-6.large-6.columns
                   %a.small.button.info.radius{:href => '/'} Go Back
                 .small-6.large-6.columns
-                  %input{:type => :hidden, :name => "_method", :value => "put"}
-                  %input.small.button.success.radius.right{:type => "submit", :value => "Update"}
+                  %input{:type => :hidden, :name => 'method', :value => 'put'}
+                  %input.small.button.success.radius.right{:type => 'submit', :value => 'Update'}
           %form{:action => "/d/#{@picture.id}", :method => 'post'}
             .row
               .large-12.columns
-                %input{:type => :hidden, :name => "_method", :value => "delete"}
-                %input.button.alert.expand.radius{:type => "submit", :value => "Delete this Image"}
+                %input{:type => :hidden, :name => 'method', :value => 'delete'}
+                %input.button.alert.expand.radius{:type => 'submit', :value => 'Delete this Image'}

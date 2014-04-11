@@ -3,22 +3,22 @@
     %h1 Upload Document
     .row
       .large-6.columns
-        %form#file_upload(action="/upload" method="post" enctype="multipart/form-data")
+        %form#file_upload(action='/upload' method='post' enctype='multipart/form-data')
           .file-upload
             %label Title
-            %input.title{:type => "text", :placeholder => "Insert Title", :name => :title}
+            %input.title{:type => 'text', :placeholder => 'Insert Title', :name => :title}
             %label File
-            %input.file{:type => :file, :name => :file, :multiple => "", :accept => 'image/*'}
-            -#%input.small.button{:type => "submit" ,:value => "Upload", :id => 'upload'}
+            %input.file{:type => :file, :name => :file, :multiple => '', :accept => 'image/*'}
+            -#%input.small.button{:type => 'submit' ,:value => 'Upload', :id => 'upload'}
 
         #progress_bar
           .progress
-            %span.pb{:class => "meter", :style => "width: 0%"}
+            %span.pb{:class => 'meter', :style => 'width: 0%'}
       .large-6.columns
         #uploaded_documents
 
--#%script{:src => asset_javascript('jquery.iframe-transport'), :type => "text/javascript"}
-%script{:src => asset_javascript('jquery.fileupload'), :type => "text/javascript"}
+-#%script{:src => asset_javascript('jquery.iframe-transport'), :type => 'text/javascript'}
+%script{:src => asset_javascript('jquery.fileupload'), :type => 'text/javascript'}
 :javascript
   $(document).ready(function() {
 
