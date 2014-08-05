@@ -7,3 +7,4 @@ upload/*
 public/thumbnails
 config/config.yml
 .idea
+.ruby-version

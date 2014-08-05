@@ -1,5 +1,7 @@
 .large-4.columns.hide-for-small
   %h4.subheader Unsere Amazon Wunschliste
+  %a{:href => @awl, :target => '_blank'}
+    .button.small.radius zur Liste
   -#%p Enjoy your stay
   - doc = Nokogiri::HTML(open(@awl))
   - doc.css('tbody[class=itemWrapper]').each do |item|
